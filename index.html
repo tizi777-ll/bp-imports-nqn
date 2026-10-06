@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BP Imports NQN | Perfumes originales importados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #070707;
+        --bg-2: #101010;
+        --line: rgba(201, 162, 39, 0.28);
+        --gold: #c9a227;
+        --gold-2: #e8d48b;
+        --cream: #f4efe4;
+        --muted: #b7b0a4;
+        --danger: #d98b8b;
+        --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+        --radius: 22px;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Manrope, sans-serif;
+        background: var(--bg);
+        color: var(--cream);
+        line-height: 1.55;
+      }
+      img { max-width: 100%; display: block; }
+      a { color: inherit; text-decoration: none; }
+      button, input { font: inherit; }
+      .gold-line {
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--gold), var(--gold-2), var(--gold), transparent);
+      }
+      .container { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(16px);
+        background: rgba(7, 7, 7, 0.86);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 74px;
+      }
+      .brand { display: flex; align-items: center; gap: 10px; }
+      .brand-crown { color: var(--gold); font-size: 22px; }
+      .brand-text { display: grid; line-height: 1.05; }
+      .brand-text strong {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 28px;
+        letter-spacing: 0.12em;
+      }
+      .brand-text small {
+        color: var(--gold-2);
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        font-size: 9px;
+      }
+      .nav { display: flex; gap: 22px; color: var(--muted); font-size: 14px; }
+      .nav a:hover { color: var(--gold-2); }
+      .cart-btn, .btn, .icon-btn, .qty button, .add-btn { cursor: pointer; }
+      .cart-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--line);
+        background: #0d0d0d;
+        color: var(--cream);
+        border-radius: 999px;
+        padding: 9px 14px;
+      }
+      .cart-btn em {
+        min-width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--gold);
+        color: #111;
+        font-style: normal;
+        font-size: 12px;
+        font-weight: 700;
+        display: grid;
+        place-items: center;
+      }
+      .hero { position: relative; padding: 72px 0 84px; overflow: hidden; }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 80% 10%, rgba(201, 162, 39, 0.18), transparent 32%),
+          radial-gradient(circle at 10% 80%, rgba(201, 162, 39, 0.08), transparent 28%);
+      }
+      .hero-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 48px;
+        align-items: center;
+      }
+      .eyebrow {
+        color: var(--gold);
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-size: 12px;
+        margin: 0 0 12px;
+      }
+      h1, h2, .brand-footer {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+      h1 { font-size: clamp(42px, 6vw, 74px); line-height: 0.95; margin: 0 0 18px; }
+      h2 { font-size: clamp(32px, 4vw, 48px); margin: 0 0 10px; }
+      .lead { max-width: 46ch; color: var(--muted); font-size: 17px; }
+      .hero-actions { display: flex; gap: 12px; margin: 28px 0 32px; flex-wrap: wrap; }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 13px 22px;
+        border: 1px solid transparent;
+        transition: 0.2s ease;
+      }
+      .btn-gold {
+        background: linear-gradient(180deg, var(--gold-2), var(--gold));
+        color: #14110a;
+        font-weight: 700;
+      }
+      .btn-gold:hover { transform: translateY(-1px); }
+      .btn-ghost { border-color: var(--line); color: var(--cream); }
+      .btn-full { width: 100%; }
+      .trust { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 0; list-style: none; }
+      .trust li {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 12px;
+        color: var(--gold-2);
+        font-size: 13px;
+      }
+      .hero-art {
+        margin: 0;
+        border-radius: 28px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+      .hero-art img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+      .catalog { padding: 20px 0 80px; }
+      .section-head { margin-bottom: 32px; }
+      .section-head p:last-child { color: var(--muted); margin: 0; }
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+      .card {
+        background: linear-gradient(180deg, #171717, #101010);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: var(--radius);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+      }
+      .photos { display: grid; grid-template-columns: 1fr 1fr; }
+      .photos figure {
+        margin: 0;
+        background: #fff;
+        aspect-ratio: 1;
+        position: relative;
+      }
+      .photos img { width: 100%; height: 100%; object-fit: contain; }
+      .photos span {
+        position: absolute;
+        left: 8px;
+        bottom: 8px;
+        background: rgba(0, 0, 0, 0.72);
+        color: var(--gold-2);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 4px 8px;
+        border-radius: 999px;
+      }
+      .card-body { padding: 18px 18px 20px; display: grid; gap: 8px; }
+      .meta { margin: 0; color: var(--muted); font-size: 14px; }
+      .meta b { color: var(--gold-2); font-weight: 600; }
+      .add-btn {
+        margin-top: 8px;
+        border-radius: 14px;
+        padding: 11px 14px;
+        background: #1d1a12;
+        color: var(--gold-2);
+        border: 1px solid var(--line);
+      }
+      .add-btn:hover { background: var(--gold); color: #111; }
+      .about { padding: 10px 0 90px; }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+        background: var(--bg-2);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 28px;
+        padding: 42px;
+      }
+      .about-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+      .about-points strong { display: block; color: var(--gold-2); }
+      .about-points span { color: var(--muted); }
+      .footer { border-top: 1px solid rgba(255, 255, 255, 0.06); padding: 28px 0 40px; }
+      .footer-grid { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+      .brand-footer { font-size: 28px; margin: 0; }
+      .drawer {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.2s ease;
+        z-index: 40;
+      }
+      .drawer.open { opacity: 1; pointer-events: auto; }
+      .drawer-panel {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: min(430px, 100%);
+        background: #0c0c0c;
+        border-left: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+      }
+      .drawer-head, .cart-foot { padding: 20px; }
+      .drawer-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--cream);
+        font-size: 24px;
+      }
+      .cart-items {
+        overflow: auto;
+        flex: 1;
+        padding: 12px 20px;
+        display: grid;
+        gap: 12px;
+        align-content: start;
+      }
+      .cart-empty { color: var(--muted); text-align: center; padding: 48px 12px; }
+      .cart-row {
+        display: grid;
+        grid-template-columns: 72px 1fr auto;
+        gap: 12px;
+        align-items: center;
+        background: #141414;
+        border-radius: 16px;
+        padding: 10px;
+      }
+      .cart-row img {
+        width: 72px;
+        height: 72px;
+        object-fit: contain;
+        background: #fff;
+        border-radius: 12px;
+      }
+      .cart-row h3 { margin: 0; font-size: 14px; }
+      .cart-row p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+      .remove { border: 0; background: transparent; color: var(--danger); padding: 0; margin-top: 6px; }
+      .qty { display: flex; align-items: center; gap: 8px; }
+      .qty button {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: #1a1a1a;
+        color: var(--cream);
+      }
+      .cart-total { display: flex; justify-content: space-between; margin-bottom: 14px; }
+      #checkout-form { display: grid; gap: 12px; }
+      #checkout-form label, #checkout-form fieldset {
+        display: grid;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      #checkout-form input[type="text"] {
+        background: #151515;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--cream);
+        border-radius: 12px;
+        padding: 11px 12px;
+      }
+      fieldset { border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 12px; }
+      .pay { display: flex !important; align-items: center; gap: 8px; color: var(--cream) !important; }
+      @media (max-width: 920px) {
+        .hero-grid, .about-grid, .grid { grid-template-columns: 1fr 1fr; }
+        .nav { display: none; }
+      }
+      @media (max-width: 680px) {
+        .hero-grid, .about-grid, .grid, .footer-grid, .photos { grid-template-columns: 1fr; }
+        .about-grid { padding: 24px; }
+        .cart-btn span { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="gold-line"></div>
+    <header class="header">
+      <div class="container header-inner">
+        <a class="brand" href="#inicio">
+          <span class="brand-crown">♛</span>
+          <span class="brand-text">
+            <strong>BP</strong>
+            <small>Imports NQN</small>
+          </span>
+        </a>
+        <nav class="nav">
+          <a href="#catalogo">Catálogo</a>
+          <a href="#nosotros">Nosotros</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+        <button class="cart-btn" id="open-cart" type="button">
+          <span>Carrito</span>
+          <em id="cart-count">0</em>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="inicio">
+        <div class="hero-bg"></div>
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">Perfumes originales importados · Neuquén</p>
+            <h1>Tu próxima fragancia te espera</h1>
+            <p class="lead">
+              Selección de perfumería importada para quien busca originalidad,
+              presencia y un pedido simple por WhatsApp.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-gold" href="#catalogo">Ver catálogo</a>
+              <a class="btn btn-ghost" href="#contacto">Consultar</a>
+            </div>
+            <ul class="trust">
+              <li>100% originales</li>
+              <li>Envíos a todo el país</li>
+              <li>Efectivo o Mercado Pago</li>
+            </ul>
+          </div>
+          <figure class="hero-art">
+            <img src="WhatsApp Image 2026-09-25 at 2.29.06 PM (4).jpeg" alt="BP Imports NQN" />
+          </figure>
+        </div>
+      </section>
+
+      <section class="catalog" id="catalogo">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Colección</p>
+            <h2>Catálogo</h2>
+            <p>Completá cada perfume por separado: las dos fotos, el nombre, el precio y la nota.</p>
+          </div>
+          <div class="grid" id="product-grid">
+
+            <!-- ========== PERFUME 1 ========== -->
+            <article class="card" data-id="p01">
+              <div class="photos">
+                <figure>
+                  <img class="foto-producto" src="WhatsApp Image 2026-09-26 at 1.47.20 PM.jpeg" alt="Perfume 1" />
+                  <span>Producto</span>
+                </figure>
+                <figure>
+                  <img class="foto-notas" src="WhatsApp Image 2026-09-26 at 1.47.20 PM (1).jpeg" alt="Notas perfume 1" />
+                  <span>Descripcción</span>
+                </figure>
+              </div>
+              <div class="card-body">
+                <p class="meta"><b>Nombre:</b> <span class="nombre">Lattafa KHAMRAH WAHA</span></p>
+                <p class="meta"><b>Precio:</b> <span class="precio">$81.000</span></p>
+                <p class="meta"><b>Nota:</b> <span class="nota">Fresco especiado</span></p>
+                <button class="add-btn" type="button" data-add="p01">Agregar al carrito</button>
+              </div>
+            </article>
+
+            <!-- ========== PERFUME 2 ========== -->
+            <article class="card" data-id="p02">
+              <div class="photos">
+                <figure>
+                  <img class="foto-producto" src="WhatsApp Image 2026-09-26 at 1.47.21 PM.jpeg" alt="Perfume 2" />
+                  <span>Producto</span>
+                </figure>
+                <figure>
+                  <img class="foto-notas" src="WhatsApp Image 2026-09-26 at 1.47.21 PM (1).jpeg" alt="Notas perfume 2" />
+                  <span>Descripcción</span>
+                </figure>
+              </div>
+              <div class="card-body">
+                <p class="meta"><b>Nombre:</b> <span class="nombre">Lattafa ASAD ELIXIR</span></p>
+                <p class="meta"><b>Precio:</b> <span class="precio">$81.000</span></p>
+                <p class="meta"><b>Nota:</b> <span class="nota">Cálido especiado</span></p>
+                <button class="add-btn" type="button" data-add="p02">Agregar al carrito</button>
+              </div>
+            </article>
+
+            <!-- ========== PERFUME 3 ========== -->
+            <article class="card" data-id="p03">
+              <div class="photos">
+                <figure>
+                  <img class="foto-producto" src="WhatsApp Image 2026-09-26 at 1.47.21 PM (2).jpeg" alt="Perfume 3" />
+                  <span>Producto</span>
+                </figure>
+                <figure>
+                  <img class="foto-notas" src="WhatsApp Image 2026-09-26 at 1.47.21 PM (3).jpeg" alt="Notas perfume 3" />
+                  <span>Descripcción</span>
+                </figure>
+              </div>
+              <div class="card-body">
+                <p class="meta"><b>Nombre:</b> <span class="nombre">Xerjoff ERBA PURA</span></p>
+                <p class="meta"><b>Precio:</b> <span class="precio">$305.000</span></p>
+                <p class="meta"><b>Nota:</b> <span class="nota">Fresco especiado</span></p>
+                <button class="add-btn" type="button" data-add="p03">Agregar al carrito</button>
+              </div>
+            </article>
+
+            <!-- ========== PERFUME 4 ========== -->
+            <article class="card" data-id="p04">
+              <div class="photos">
+                <figure>
+                  <img class="foto-producto" src="WhatsApp Image 2026-09-26 at 1.47.22 PM.jpeg" alt="Perfume 4" />
+                  <span>Producto</span>
+                </figure>
+                <figure>
+                  <img class="foto-notas" src="WhatsApp Image 2026-09-26 at 1.47.22 PM (1).jpeg" alt="Notas perfume 4" />
+                  <span>Descripcción</span>
+                </figure>
+              </div>
+              <div class="card-body">
+                <p class="meta"><b>Nombre:</b> <span class="nombre">AL HARAMAIN AMBER OUD GOLD EDITION</span></p>
+                <p class="meta"><b>Precio:</b> <span class="precio">$115.000</span></p>
+                <p class="meta"><b>Nota:</b> <span class="nota">Dulce</span></p>
+                <button class="add-btn" type="button" data-add="p04">Agregar al carrito</button>
+              </div>
+            </article>
+
+            <!-- ========== PERFUME 5 ========== -->
+            <article class="card" data-id="p05">
+              <div class="photos">
+                <figure>
+                  <img class="foto-producto" src="WhatsApp Image 2026-09-26 at 1.47.22 PM (2).jpeg" alt="Perfume 5" />
+                  <span>Producto</span>
+                </figure>
+                <figure>
+                  <img class="foto-notas" src="WhatsApp Image 2026-09-26 at 1.47.22 PM (3).jpeg" alt="Notas perfume 5" />
+                  <span>Descripcción</span>
+                </figure>
+              </div>
+              <div class="card-body">
+                <p class="meta"><b>Nombre:</b> <span class="nombre">FRENCH AVENUE LIQUID BRUN</span></p>
+                <p class="meta"><b>Precio:</b> <span class="precio">$100.000</span></p>
+                <p class="meta"><b>Nota:</b> <span class="nota">Cálido especiado</span></p>
+                <button class="add-btn" type="button" data-add="p05">Agregar al carrito</button>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="about" id="nosotros">
+        <div class="container about-grid">
+          <div>
+            <p class="eyebrow">BP Imports NQN</p>
+            <h2>Emprendimiento de perfumes en Neuquén</h2>
+            <p>Armamos el pedido desde el carrito y lo enviamos directo a WhatsApp.</p>
+          </div>
+          <ul class="about-points">
+            <li><strong>Originales</strong><span>Perfumes importados, listos para consultar stock.</span></li>
+            <li><strong>Pago simple</strong><span>Elegí efectivo o Mercado Pago al cerrar el pedido.</span></li>
+            <li><strong>Atención directa</strong><span>El mensaje llega al +54 299 628-2855.</span></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" id="contacto">
+      <div class="container footer-grid">
+        <div>
+          <p class="brand-footer">BP Imports NQN</p>
+          <p>Neuquén · Consultas por WhatsApp</p>
+        </div>
+        <a class="btn btn-gold" href="https://wa.me/5492996282855" target="_blank" rel="noopener">
+          Escribir al 299 628-2855
+        </a>
+      </div>
+    </footer>
+
+    <aside class="drawer" id="cart-drawer">
+      <div class="drawer-panel">
+        <div class="drawer-head">
+          <h2>Tu carrito</h2>
+          <button class="icon-btn" id="close-cart" type="button">×</button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-foot">
+          <div class="cart-total">
+            <span>Total</span>
+            <strong id="cart-total">A completar</strong>
+          </div>
+          <form id="checkout-form">
+            <label>
+              Tu nombre
+              <input type="text" id="customer-name" placeholder="Nombre y apellido" />
+            </label>
+            <fieldset>
+              <legend>Método de pago</legend>
+              <label class="pay"><input type="radio" name="payment" value="Efectivo" checked /> Efectivo</label>
+              <label class="pay"><input type="radio" name="payment" value="Mercado Pago" /> Mercado Pago</label>
+            </fieldset>
+            <button class="btn btn-gold btn-full" type="submit">Enviar pedido por WhatsApp</button>
+          </form>
+        </div>
+      </div>
+    </aside>
+
+    <script>
+      const WHATSAPP_NUMBER = "5492996282855";
+      const PLACEHOLDER = "A completar";
+      const cart = new Map();
+      const els = {
+        drawer: document.getElementById("cart-drawer"),
+        items: document.getElementById("cart-items"),
+        count: document.getElementById("cart-count"),
+        total: document.getElementById("cart-total"),
+        form: document.getElementById("checkout-form"),
+      };
+
+      function productById(id) {
+        const card = document.querySelector('.card[data-id="' + id + '"]');
+        return {
+          id: id,
+          name: card.querySelector(".nombre").textContent.trim(),
+          price: card.querySelector(".precio").textContent.trim(),
+          note: card.querySelector(".nota").textContent.trim(),
+          image: card.querySelector(".foto-producto").getAttribute("src"),
+        };
+      }
+
+      function cartQty() {
+        let total = 0;
+        cart.forEach((qty) => { total += qty; });
+        return total;
+      }
+
+      function renderCart() {
+        els.count.textContent = String(cartQty());
+        if (cart.size === 0) {
+          els.items.innerHTML = '<p class="cart-empty">El carrito está vacío.</p>';
+          els.total.textContent = PLACEHOLDER;
+          return;
+        }
+        els.items.innerHTML = Array.from(cart.entries()).map(([id, qty]) => {
+          const item = productById(id);
+          return `
+            <article class="cart-row">
+              <img src="${item.image}" alt="${item.name}" />
+              <div>
+                <h3>${item.name}</h3>
+                <p>Precio: ${item.price}</p>
+                <p>${item.note}</p>
+                <button class="remove" type="button" data-remove="${id}">Quitar</button>
+              </div>
+              <div class="qty">
+                <button type="button" data-dec="${id}">−</button>
+                <span>${qty}</span>
+                <button type="button" data-inc="${id}">+</button>
+              </div>
+            </article>
+          `;
+        }).join("");
+        els.total.textContent = PLACEHOLDER;
+      }
+
+      function addToCart(id) {
+        cart.set(id, (cart.get(id) || 0) + 1);
+        renderCart();
+      }
+
+      function changeQty(id, delta) {
+        const next = (cart.get(id) || 0) + delta;
+        if (next <= 0) cart.delete(id);
+        else cart.set(id, next);
+        renderCart();
+      }
+
+      function openCart() { els.drawer.classList.add("open"); }
+      function closeCart() { els.drawer.classList.remove("open"); }
+
+      function sendOrder(event) {
+        event.preventDefault();
+        if (cart.size === 0) { openCart(); return; }
+        const name = document.getElementById("customer-name").value.trim() || PLACEHOLDER;
+        const payment = document.querySelector('input[name="payment"]:checked').value;
+        const lines = Array.from(cart.entries()).map(([id, qty]) => {
+          const item = productById(id);
+          return `- ${item.name} x${qty}\n  Precio: ${item.price}\n  Nota: ${item.note}`;
+        });
+        const message = [
+          "Hola, quiero hacer un pedido en BP Imports NQN.",
+          "",
+          `Nombre: ${name}`,
+          `Pago: ${payment}`,
+          "",
+          "Pedido:",
+          ...lines,
+          "",
+          `Total: ${PLACEHOLDER}`,
+        ].join("\n");
+        window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message), "_blank");
+      }
+
+      document.getElementById("open-cart").addEventListener("click", openCart);
+      document.getElementById("close-cart").addEventListener("click", closeCart);
+      els.drawer.addEventListener("click", (event) => {
+        if (event.target === els.drawer) closeCart();
+      });
+      document.addEventListener("click", (event) => {
+        const add = event.target.closest("[data-add]");
+        const inc = event.target.closest("[data-inc]");
+        const dec = event.target.closest("[data-dec]");
+        const remove = event.target.closest("[data-remove]");
+        if (add) { addToCart(add.dataset.add); openCart(); }
+        if (inc) changeQty(inc.dataset.inc, 1);
+        if (dec) changeQty(dec.dataset.dec, -1);
+        if (remove) { cart.delete(remove.dataset.remove); renderCart(); }
+      });
+      els.form.addEventListener("submit", sendOrder);
+      renderCart();
+    </script>
+  </body>
+</html>
